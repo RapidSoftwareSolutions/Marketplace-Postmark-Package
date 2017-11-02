@@ -12,18 +12,26 @@ $app->post('/api/Postmark/getBrowserUsage', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','tag'=>'tag'];
-    $optionalParams = ['fromDate'=>'fromdate','toDate'=>'todate'];
+    $requiredParams = ['serverToken'=>'serverToken'];
+    $optionalParams = ['fromDate'=>'fromdate','toDate'=>'todate','tag'=>'tag'];
     $bodyParams = [
        'query' => ['todate','fromdate','tag']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
-    $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d'); 
-    $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d'); 
 
+    if(!empty($data['fromdate']))
+    {
+        $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d');
+
+    }
+
+    if(!empty($data['todate']))
+    {
+        $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d');
+
+    }
     $client = $this->httpClient;
     $query_str = "https://api.postmarkapp.com/stats/outbound/clicks/browserfamilies";
 

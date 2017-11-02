@@ -12,8 +12,8 @@ $app->post('/api/Postmark/createTriggerForTag', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','matchName'=>'MatchName','trackOpens'=>'TrackOpens'];
-    $optionalParams = [];
+    $requiredParams = ['serverToken'=>'serverToken','matchName'=>'MatchName'];
+    $optionalParams = ['trackOpens'=>'TrackOpens'];
     $bodyParams = [
        'json' => ['MatchName','TrackOpens']
     ];
@@ -77,7 +77,6 @@ $app->post('/api/Postmark/createTriggerForTag', function ($request, $response) {
         $result['contextWrites']['to']['status_msg'] = 'Something went wrong inside the package.';
 
     }
-
     return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($result);
 
 });

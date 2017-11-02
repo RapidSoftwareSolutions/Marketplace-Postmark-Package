@@ -12,8 +12,8 @@ $app->post('/api/Postmark/updateTrigger', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','matchName'=>'MatchName','trackOpens'=>'TrackOpens','triggerId'=>'triggerId'];
-    $optionalParams = [];
+    $requiredParams = ['serverToken'=>'serverToken','matchName'=>'MatchName','triggerId'=>'triggerId'];
+    $optionalParams = ['trackOpens'=>'TrackOpens'];
     $bodyParams = [
        'json' => ['MatchName','TrackOpens']
     ];

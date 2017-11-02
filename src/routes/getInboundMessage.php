@@ -20,10 +20,18 @@ $app->post('/api/Postmark/getInboundMessage', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
-    $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d'); 
-    $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d'); 
 
+    if(!empty($data['fromdate']))
+    {
+        $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d');
+
+    }
+
+    if(!empty($data['todate']))
+    {
+        $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d');
+
+    }
     $client = $this->httpClient;
     $query_str = "https://api.postmarkapp.com/messages/inbound";
 

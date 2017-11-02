@@ -28,7 +28,9 @@ $app->post('/api/Postmark/getTrigger', function ($request, $response) {
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
-     
+    $requestParams['query']['count'] = 100;
+    $requestParams['query']['offset'] = 0;
+
 
     try {
         $resp = $client->get($query_str, $requestParams);

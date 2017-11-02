@@ -28,7 +28,8 @@ $app->post('/api/Postmark/getServerForAccount', function ($request, $response) {
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Postmark-Account-Token"=>"{$data['accountToken']}", "Accept"=>"application/json"];
-     
+    $requestParams['query']['count'] = 10;
+    $requestParams['query']['offset'] = 0;
 
     try {
         $resp = $client->get($query_str, $requestParams);

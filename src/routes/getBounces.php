@@ -20,9 +20,17 @@ $app->post('/api/Postmark/getBounces', function ($request, $response) {
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
-    $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d'); 
-    $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d'); 
+    if(!empty($data['fromdate']))
+    {
+        $data['fromdate'] = \Models\Params::toFormat($data['fromdate'], 'Y-m-d');
+
+    }
+
+    if(!empty($data['todate']))
+    {
+        $data['todate'] = \Models\Params::toFormat($data['todate'], 'Y-m-d');
+
+    }
 
     $client = $this->httpClient;
     $query_str = "https://api.postmarkapp.com/bounces";
@@ -79,7 +87,6 @@ $app->post('/api/Postmark/getBounces', function ($request, $response) {
         $result['contextWrites']['to']['status_msg'] = 'Something went wrong inside the package.';
 
     }
-    exit();
     return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($result);
 
 });
