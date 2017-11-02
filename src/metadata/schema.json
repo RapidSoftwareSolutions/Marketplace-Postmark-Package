@@ -1,0 +1,4970 @@
+{
+    "package": "Postmark",
+    "tagline": "Postmark API",
+    "description": "Postmark helps deliver and track transactional emails for web applications. In a nutshell, the service replaces SMTP (or Sendmail) with a far more reliable, scalable and care-free environment. In addition, you can track statistics such as number of emails sent or processed, opens, bounces and spam complaints.",
+    "image": "https:\/\/logo.clearbit.com\/postmarkapp.com\/",
+    "repo": "https:\/\/github.com\/RapidSoftwareSolutions\/Marketplace-Postmark-Package",
+    "keywords": [
+        "API",
+        "Mail",
+        "Deliver",
+        "SMTP",
+        "Send"
+    ],
+    "accounts": {
+        "domain": "postmarkapp.com",
+        "credentials": [
+            "serverToken",
+            "accountToken"
+        ]
+    },
+    "steps": [
+        "Register on the https:\/\/postmarkapp.com",
+        "Create an server for a new API credentials https:\/\/account.postmarkapp.com\/servers",
+        "After creation server you will see API credentials in server settings"
+    ],
+    "events": [
+        {
+            "name": "webhookEvent",
+            "description": "A webhook is the act of Postmark making an HTTP POST request to your application\u2019s API when an event occurs. This way Postmark is able to immediately notify you when an event occurs and your application doesn\u2019t have to perform complicated polling of Postmark\u2019s API to determine if something new occurred.",
+            "payload": {
+                "ID": 42,
+                "Type": "HardBounce",
+                "TypeCode": 1,
+                "Name": "Hard bounce",
+                "Tag": "Test",
+                "MessageID": "883953f4-6105-42a2-a16a-77a8eac79483",
+                "ServerId": 23,
+                "Description": "The server was unable to deliver your message (ex: unknown user, mailbox not found).",
+                "Details": "Test bounce details",
+                "Email": "john@example.com",
+                "From": "sender@example.com",
+                "BouncedAt": "2014-08-01T13:28:10.2735393-04:00",
+                "DumpAvailable": true,
+                "Inactive": true,
+                "CanActivate": true,
+                "Subject": "Test subject",
+                "Content": "<Full dump of bounce>"
+            },
+            "steps": [
+                "When logged into Postmark, select the server and go to the `Settings` tab and then the Outbound\/Inbound tab. The `Bounce\/Inbound Webhook` field is where you should input your webhook URL __WEBHOOK_URL__",
+                "You can modify the InboundHookUrl\/OutboundHookUrl field using the Servers API to modify existing servers. You can also use the Servers API to create servers and set the InboundHookUrl\/OutboundHookUrl field at the same time.See more in readme."
+            ],
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "String",
+                    "info": "Your serverToken.",
+                    "required": false
+                }
+            ]
+        }
+    ],
+    "blocks": [
+        {
+            "name": "sendEmail",
+            "description": "This endpoint is solely responsible for sending emails with Postmark through a specific server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "from",
+                    "type": "String",
+                    "info": "The sender email address. Must have a registered and confirmed Sender Signature.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "From"
+                    }
+                },
+                {
+                    "name": "to",
+                    "type": "String",
+                    "info": "Recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "To"
+                    }
+                },
+                {
+                    "name": "CcRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Cc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Cc"
+                    }
+                },
+                {
+                    "name": "BccRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Bcc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Bcc"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "Email subject.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Tag"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "If no TextBody specified HTML email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "replyTo",
+                    "type": "String",
+                    "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReplyTo"
+                    }
+                },
+                {
+                    "name": "headers",
+                    "type": "Array",
+                    "structure": [
+                        {
+                            "name": "Name",
+                            "type": "String",
+                            "info": "Custom header name.",
+                            "required": true
+                        },
+                        {
+                            "name": "Value",
+                            "type": "String",
+                            "info": "Custom header value.",
+                            "required": true
+                        }
+                    ],
+                    "info": "List of custom headers to include.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "headers"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Activate open tracking for this email.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Activate link tracking for links in the HTML or Text bodies of this email. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "attachments",
+                    "type": "Array",
+                    "structure": [
+                        {
+                            "name": "Name",
+                            "type": "String",
+                            "info": "File name.",
+                            "required": true
+                        },
+                        {
+                            "name": "Content",
+                            "type": "File",
+                            "info": "File url.",
+                            "required": true
+                        },
+                        {
+                            "name": "ContentType",
+                            "type": "File",
+                            "info": "contentType of file.",
+                            "required": true
+                        },
+                        {
+                            "name": "ContentID",
+                            "type": "String",
+                            "info": "Postmark also allows you to send inline images via HTML mesages. Images must be base64-encoded and the ContentID field must match the image's CID.",
+                            "required": false
+                        }
+                    ],
+                    "info": "List of attachments",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Attachments"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/email",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "From",
+                            "To",
+                            "Cc",
+                            "Bcc",
+                            "Subject",
+                            "Tag",
+                            "HtmlBody",
+                            "TextBody",
+                            "ReplyTo",
+                            "Headers",
+                            "TrackOpens",
+                            "TrackLinks",
+                            "Attachments"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "sendEmails",
+            "description": "This endpoint is solely responsible for sending emails with Postmark through a specific server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "emails",
+                    "type": "Array",
+                    "structure": [
+                        {
+                            "name": "from",
+                            "type": "String",
+                            "info": "The sender email address. Must have a registered and confirmed Sender Signature.",
+                            "required": true,
+                            "vendorSchema": {
+                                "name": "From"
+                            }
+                        }
+                    ],
+                    "info": "Array of email.",
+                    "required": true
+                },
+                {
+                    "name": "to",
+                    "type": "String",
+                    "info": "Recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "To"
+                    }
+                },
+                {
+                    "name": "CcRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Cc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Cc"
+                    }
+                },
+                {
+                    "name": "BccRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Bcc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Bcc"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "Email subject.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Tag"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "If no TextBody specified HTML email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "replyTo",
+                    "type": "String",
+                    "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReplyTo"
+                    }
+                },
+                {
+                    "name": "headers",
+                    "type": "JSON",
+                    "info": "Json list of custom headers to include.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "headers"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Activate open tracking for this email.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Activate link tracking for links in the HTML or Text bodies of this email. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "attachments",
+                    "type": "JSON",
+                    "info": "List of attachments",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Attachments"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/email",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "emails"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getDeliveryStats",
+            "description": "Get delivery stats.Lets you access all reports regarding your bounces for a specific server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/deliverystats",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBounces",
+            "description": "Lets you access all reports regarding your bounces for a specific server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of bounces to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of bounces to skip.",
+                    "required": true
+                },
+                {
+                    "name": "inactive",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Filter by emails that were deactivated by Postmark due to the bounce. Set to true or false. If this isn\u2019t specified it will return both active and inactive.",
+                    "required": false
+                },
+                {
+                    "name": "emailFilter",
+                    "type": "String",
+                    "info": "Filter by email address.",
+                    "required": false
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": false
+                },
+                {
+                    "name": "messageID",
+                    "type": "String",
+                    "info": "Filter by messageID.",
+                    "required": false
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages starting from the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                },
+                {
+                    "name": "type",
+                    "type": "Select",
+                    "options": [
+                        "HardBounce",
+                        "Transient",
+                        "Unsubscribe",
+                        "Subscribe",
+                        "AutoResponder",
+                        "AddressChange",
+                        "DnsError",
+                        "SpamNotification",
+                        "OpenRelayTest",
+                        "Unknown",
+                        "SoftBounce",
+                        "VirusNotification",
+                        "ChallengeVerification",
+                        "BadEmailAddress",
+                        "SpamComplaint",
+                        "ManuallyDeactivated",
+                        "Unconfirmed",
+                        "Blocked",
+                        "SMTPApiError",
+                        "InboundError",
+                        "DMARCPolicy",
+                        "TemplateRenderingFailed"
+                    ],
+                    "info": "Bounce types.See more in readme.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/bounces",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "type",
+                            "inactive",
+                            "emailFilter",
+                            "tag",
+                            "messageID",
+                            "fromdate",
+                            "todate"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBounce",
+            "description": "Get a single bounce.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "bounceId",
+                    "type": "String",
+                    "info": "Id of bounce.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBounceDump",
+            "description": "Get bounce dump.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "bounceId",
+                    "type": "String",
+                    "info": "Id of bounce.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}\/dump",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "activateBounce",
+            "description": "Activate a bounce.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "bounceId",
+                    "type": "String",
+                    "info": "Id of bounce.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}\/activate",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json",
+                    "Content-Type": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBouncedTags",
+            "description": "Get an array of tags that have generated bounces for a given server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/tags",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json",
+                    "Content-Type": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTemplate",
+            "description": "Get a template.Lets you manage templates for a specific server. Please note that a Server may have up to 300 active templates. Requests that exceed this limit won't be processed.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "templateId",
+                    "type": "Number",
+                    "info": "ID of template.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates\/{$data['templateId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json",
+                    "Content-Type": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createTemplate",
+            "description": "Create a template.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of template.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "The content to use for the Subject when this template is used to send email. See readme for more information.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Subject",
+                            "TextBody",
+                            "HtmlBody"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateTemplate",
+            "description": "Edit a template.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "templateId",
+                    "type": "Number",
+                    "info": "ID of template.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of template.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "The content to use for the Subject when this template is used to send email. See readme for more information.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates\/{$data['templateId']}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Subject",
+                            "TextBody",
+                            "HtmlBody"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTemplatesList",
+            "description": "Get list of templates.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "The number of templates to return.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Count"
+                    }
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "The number of templates to `skip` before returning results.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Offset"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "Offset",
+                            "Count"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteTemplate",
+            "description": "Delete a template.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "templateId",
+                    "type": "Number",
+                    "info": "ID of template.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates\/{$data['templateId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "validateTemplate",
+            "description": "Create a template.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of template.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "The content to use for the Subject when this template is used to send email. See readme for more information.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                },
+                {
+                    "name": "testRenderModel",
+                    "type": "JSON",
+                    "info": "The model to be used when rendering test content.See more in readme.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TestRenderModel"
+                    }
+                },
+                {
+                    "name": "inlineCssForHtmlTestRender",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "When HtmlBody is specified, the test render will have style blocks inlined as style attributes on matching html elements. You may disable the css inlining behavior by passing false for this parameter.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InlineCssForHtmlTestRender"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/templates\/validate",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Subject",
+                            "TextBody",
+                            "HtmlBody",
+                            "InlineCssForHtmlTestRender",
+                            "testRenderModel"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "sendEmailWithTemplate",
+            "description": "Send email with template.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "templateId",
+                    "type": "Number",
+                    "info": "The template to use when sending this message.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "TemplateId"
+                    }
+                },
+                {
+                    "name": "templateModel",
+                    "type": "Number",
+                    "info": "The model to be applied to the specified template to generate HtmlBody, TextBody, and Subject.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "TemplateModel"
+                    }
+                },
+                {
+                    "name": "inlineCss",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "By default, if the specified template contains an HTMLBody, we will apply the style blocks as inline attributes to the rendered HTML content. You may opt-out of this behavior by passing false for this request field.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "TemplateModel"
+                    }
+                },
+                {
+                    "name": "from",
+                    "type": "String",
+                    "info": "The sender email address. Must have a registered and confirmed Sender Signature.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "From"
+                    }
+                },
+                {
+                    "name": "to",
+                    "type": "String",
+                    "info": "Recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "To"
+                    }
+                },
+                {
+                    "name": "CcRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Cc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Cc"
+                    }
+                },
+                {
+                    "name": "BccRecipientEmailAddress",
+                    "type": "String",
+                    "info": "Bcc recipient email address. Multiple addresses are comma separated. Max 50.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Bcc"
+                    }
+                },
+                {
+                    "name": "subject",
+                    "type": "String",
+                    "info": "Email subject.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Subject"
+                    }
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Tag"
+                    }
+                },
+                {
+                    "name": "htmlBody",
+                    "type": "String",
+                    "info": "If no TextBody specified HTML email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "HtmlBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "textBody",
+                    "type": "String",
+                    "info": "If no HtmlBody specified Plain text email message.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TextBody"
+                    }
+                },
+                {
+                    "name": "replyTo",
+                    "type": "String",
+                    "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReplyTo"
+                    }
+                },
+                {
+                    "name": "headers",
+                    "type": "Array",
+                    "structure": [
+                        {
+                            "name": "Name",
+                            "type": "String",
+                            "info": "Custom header name.",
+                            "required": true
+                        },
+                        {
+                            "name": "Value",
+                            "type": "String",
+                            "info": "Custom header value.",
+                            "required": true
+                        }
+                    ],
+                    "info": "List of custom headers to include.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "headers"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Activate open tracking for this email.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Activate link tracking for links in the HTML or Text bodies of this email. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "attachments",
+                    "type": "Array",
+                    "structure": [
+                        {
+                            "name": "Name",
+                            "type": "String",
+                            "info": "File name.",
+                            "required": true
+                        },
+                        {
+                            "name": "Content",
+                            "type": "File",
+                            "info": "File url.",
+                            "required": true
+                        },
+                        {
+                            "name": "ContentType",
+                            "type": "File",
+                            "info": "contentType of file.",
+                            "required": true
+                        },
+                        {
+                            "name": "ContentID",
+                            "type": "String",
+                            "info": "Postmark also allows you to send inline images via HTML mesages. Images must be base64-encoded and the ContentID field must match the image's CID.",
+                            "required": false
+                        }
+                    ],
+                    "info": "List of attachments",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Attachments"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/email\/withTemplate\/",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "TemplateId",
+                            "TemplateModel",
+                            "InlineCss",
+                            "From",
+                            "To",
+                            "Cc",
+                            "Bcc",
+                            "Subject",
+                            "Tag",
+                            "HtmlBody",
+                            "TextBody",
+                            "ReplyTo",
+                            "Headers",
+                            "TrackOpens",
+                            "TrackLinks",
+                            "Attachments"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getServer",
+            "description": "Get the server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/server",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateServer",
+            "description": "Edit the server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "color",
+                    "type": "Select",
+                    "options": [
+                        "Purple",
+                        "Blue",
+                        "Turqoise",
+                        "Green",
+                        "Red",
+                        "Yellow",
+                        "Grey"
+                    ],
+                    "info": "Color of the server in the rack screen.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Color"
+                    }
+                },
+                {
+                    "name": "dmtpApiActivated",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Specifies whether or not SMTP is enabled on this server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "SmtpApiActivated"
+                    }
+                },
+                {
+                    "name": "rawEmailEnabled",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Enable raw email to be sent with inbound.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "RawEmailEnabled"
+                    }
+                },
+                {
+                    "name": "deliveryHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time email is delivered.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "DeliveryHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an inbound event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundHookUrl"
+                    }
+                },
+                {
+                    "name": "bounceHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time a bounce event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "BounceHookUrl"
+                    }
+                },
+                {
+                    "name": "includeBounceContentInHook",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Include bounce content in webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "IncludeBounceContentInHook"
+                    }
+                },
+                {
+                    "name": "openHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an open event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "OpenHookUrl"
+                    }
+                },
+                {
+                    "name": "postFirstOpenOnly",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set to true, only the first open by a particular recipient will initiate the open webhook. Any subsequent opens of the same email by the same recipient will not initiate the webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "PostFirstOpenOnly"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Indicates if all emails being sent through this server have open tracking enabled.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "clickHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to when a unique click event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ClickHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundDomain",
+                    "type": "String",
+                    "info": "Inbound domain for MX setup.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundDomain"
+                    }
+                },
+                {
+                    "name": "inboundSpamThreshold",
+                    "type": "String",
+                    "info": "The maximum spam score for an inbound message before it's blocked.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundSpamThreshold"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/server",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Color",
+                            "SmtpApiActivated",
+                            "RawEmailEnabled",
+                            "DeliveryHookUrl",
+                            "InboundHookUrl",
+                            "BounceHookUrl",
+                            "IncludeBounceContentInHook",
+                            "OpenHookUrl",
+                            "PostFirstOpenOnly",
+                            "TrackOpens",
+                            "TrackLinks",
+                            "ClickHookUrl",
+                            "InboundDomain",
+                            "InboundSpamThreshold"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getServerForAccount",
+            "description": "Lets you manage servers for a specific account.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "serverId",
+                    "type": "Number",
+                    "info": "ID of server.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/servers\/{$data['serverId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createServerForAccount",
+            "description": "Create a server for account.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "color",
+                    "type": "Select",
+                    "options": [
+                        "Purple",
+                        "Blue",
+                        "Turqoise",
+                        "Green",
+                        "Red",
+                        "Yellow",
+                        "Grey"
+                    ],
+                    "info": "Color of the server in the rack screen.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Color"
+                    }
+                },
+                {
+                    "name": "dmtpApiActivated",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Specifies whether or not SMTP is enabled on this server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "SmtpApiActivated"
+                    }
+                },
+                {
+                    "name": "rawEmailEnabled",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Enable raw email to be sent with inbound.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "RawEmailEnabled"
+                    }
+                },
+                {
+                    "name": "deliveryHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time email is delivered.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "DeliveryHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an inbound event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundHookUrl"
+                    }
+                },
+                {
+                    "name": "bounceHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time a bounce event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "BounceHookUrl"
+                    }
+                },
+                {
+                    "name": "includeBounceContentInHook",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Include bounce content in webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "IncludeBounceContentInHook"
+                    }
+                },
+                {
+                    "name": "openHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an open event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "OpenHookUrl"
+                    }
+                },
+                {
+                    "name": "postFirstOpenOnly",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set to true, only the first open by a particular recipient will initiate the open webhook. Any subsequent opens of the same email by the same recipient will not initiate the webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "PostFirstOpenOnly"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Indicates if all emails being sent through this server have open tracking enabled.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "clickHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to when a unique click event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ClickHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundDomain",
+                    "type": "String",
+                    "info": "Inbound domain for MX setup.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundDomain"
+                    }
+                },
+                {
+                    "name": "inboundSpamThreshold",
+                    "type": "String",
+                    "info": "The maximum spam score for an inbound message before it's blocked.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundSpamThreshold"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/servers",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Color",
+                            "SmtpApiActivated",
+                            "RawEmailEnabled",
+                            "DeliveryHookUrl",
+                            "InboundHookUrl",
+                            "BounceHookUrl",
+                            "IncludeBounceContentInHook",
+                            "OpenHookUrl",
+                            "PostFirstOpenOnly",
+                            "TrackOpens",
+                            "TrackLinks",
+                            "ClickHookUrl",
+                            "InboundDomain",
+                            "InboundSpamThreshold"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateServerForAccount",
+            "description": "Update a server for account.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "serverId",
+                    "type": "Number",
+                    "info": "Id of the server.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Name of server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "color",
+                    "type": "Select",
+                    "options": [
+                        "Purple",
+                        "Blue",
+                        "Turqoise",
+                        "Green",
+                        "Red",
+                        "Yellow",
+                        "Grey"
+                    ],
+                    "info": "Color of the server in the rack screen.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "Color"
+                    }
+                },
+                {
+                    "name": "dmtpApiActivated",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Specifies whether or not SMTP is enabled on this server.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "SmtpApiActivated"
+                    }
+                },
+                {
+                    "name": "rawEmailEnabled",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Enable raw email to be sent with inbound.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "RawEmailEnabled"
+                    }
+                },
+                {
+                    "name": "deliveryHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time email is delivered.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "DeliveryHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an inbound event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundHookUrl"
+                    }
+                },
+                {
+                    "name": "bounceHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time a bounce event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "BounceHookUrl"
+                    }
+                },
+                {
+                    "name": "includeBounceContentInHook",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Include bounce content in webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "IncludeBounceContentInHook"
+                    }
+                },
+                {
+                    "name": "openHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to every time an open event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "OpenHookUrl"
+                    }
+                },
+                {
+                    "name": "postFirstOpenOnly",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "If set to true, only the first open by a particular recipient will initiate the open webhook. Any subsequent opens of the same email by the same recipient will not initiate the webhook.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "PostFirstOpenOnly"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "Select",
+                    "options": [
+                        "true",
+                        "false"
+                    ],
+                    "info": "Indicates if all emails being sent through this server have open tracking enabled.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "trackLinks",
+                    "type": "Select",
+                    "options": [
+                        "None",
+                        "HtmlAndText",
+                        "HtmlOnly",
+                        "TextOnly"
+                    ],
+                    "info": "Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. ",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "TrackLinks"
+                    }
+                },
+                {
+                    "name": "clickHookUrl",
+                    "type": "String",
+                    "info": "URL to POST to when a unique click event occurs.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ClickHookUrl"
+                    }
+                },
+                {
+                    "name": "inboundDomain",
+                    "type": "String",
+                    "info": "Inbound domain for MX setup.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundDomain"
+                    }
+                },
+                {
+                    "name": "inboundSpamThreshold",
+                    "type": "String",
+                    "info": "The maximum spam score for an inbound message before it's blocked.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "InboundSpamThreshold"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/servers\/{$data['serverId']}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "Color",
+                            "SmtpApiActivated",
+                            "RawEmailEnabled",
+                            "DeliveryHookUrl",
+                            "InboundHookUrl",
+                            "BounceHookUrl",
+                            "IncludeBounceContentInHook",
+                            "OpenHookUrl",
+                            "PostFirstOpenOnly",
+                            "TrackOpens",
+                            "TrackLinks",
+                            "ClickHookUrl",
+                            "InboundDomain",
+                            "InboundSpamThreshold"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getServersForAccounts",
+            "description": "List servers.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of servers to return per request.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of servers to skip.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Filter by a specific server name.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/servers",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "offset",
+                            "count",
+                            "name"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getOutboundMessage",
+            "description": "Outbound message search.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of messages to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of messages to skip.",
+                    "required": true
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by the user who was receiving the email.",
+                    "required": false
+                },
+                {
+                    "name": "fromEmail",
+                    "type": "String",
+                    "info": "Filter by the sender email address.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "fromemail"
+                    }
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by the user who was receiving the email.",
+                    "required": false
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": false
+                },
+                {
+                    "name": "status",
+                    "type": "Select",
+                    "options": [
+                        "queued",
+                        "sent"
+                    ],
+                    "info": "Filter by status (queued or sent)",
+                    "required": false
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages starting from the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "recipient",
+                            "fromemail",
+                            "tag",
+                            "status",
+                            "todate",
+                            "fromdate"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteServerForAccount",
+            "description": "Delete a server.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "serverId",
+                    "type": "String",
+                    "info": "Id of the server.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/servers\/{$data['serverId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getOutboundMessageDetails",
+            "description": "Get Outbound message details.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/{$data['messageId']}\/details",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getOutboundMessageDump",
+            "description": "Get Outbound message dump.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/{$data['messageId']}\/dump",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getInboundMessage",
+            "description": "Inbound message search.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of messages to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of messages to skip.",
+                    "required": true
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by the user who was receiving the email.",
+                    "required": false
+                },
+                {
+                    "name": "fromEmail",
+                    "type": "String",
+                    "info": "Filter by the sender email address.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "fromemail"
+                    }
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by the user who was receiving the email.",
+                    "required": false
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": false
+                },
+                {
+                    "name": "status",
+                    "type": "Select",
+                    "options": [
+                        "queued",
+                        "sent"
+                    ],
+                    "info": "Filter by status (queued or sent)",
+                    "required": false
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages starting from the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter messages up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/inbound",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "recipient",
+                            "fromemail",
+                            "tag",
+                            "status",
+                            "todate",
+                            "fromdate"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getInboundMessageDetails",
+            "description": "Get Inbound message details.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/inbound\/{$data['messageId']}\/details",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "processFailedInboundMessage",
+            "description": "Retry a failed inbound message for processing.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/inbound\/{$data['messageId']}\/retry",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "bypassBlockedInboundMessage",
+            "description": "Bypass rules for a blocked inbound message.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/inbound\/{$data['messageId']}\/bypass",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "openMessage",
+            "description": "Message opens.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of message opens to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of messages to skip.",
+                    "required": true
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by To, Cc, Bcc.",
+                    "required": false
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": false
+                },
+                {
+                    "name": "clientName",
+                    "type": "String",
+                    "info": "Filter by client name, i.e. Outlook, Gmail.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_name"
+                    }
+                },
+                {
+                    "name": "clientCompany",
+                    "type": "String",
+                    "info": "Filter by company, i.e. Microsoft, Apple, Google.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_company"
+                    }
+                },
+                {
+                    "name": "clientFamily",
+                    "type": "String",
+                    "info": "Filter by client family, i.e. OS X, Chrome.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_family"
+                    }
+                },
+                {
+                    "name": "osName",
+                    "type": "String",
+                    "info": "Filter by full OS name and specific version, i.e. OS X 10.9 Mavericks, Windows 7.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_name"
+                    }
+                },
+                {
+                    "name": "osFamily",
+                    "type": "String",
+                    "info": "Filter by kind of OS used without specific version, i.e. OS X, Windows.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_family"
+                    }
+                },
+                {
+                    "name": "osCompany",
+                    "type": "String",
+                    "info": "Filter by company which produced the OS, i.e. Apple Computer, Inc., Microsoft Corporation.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_company"
+                    }
+                },
+                {
+                    "name": "platform",
+                    "type": "String",
+                    "info": "Filter by platform, i.e. webmail, desktop, mobile.",
+                    "required": false
+                },
+                {
+                    "name": "region",
+                    "type": "String",
+                    "info": "Filter by full name of region messages were opened in, i.e. Moscow, New York.",
+                    "required": false
+                },
+                {
+                    "name": "city",
+                    "type": "String",
+                    "info": "Filter by full name of city messages were opened in, i.e. Minneapolis, Philadelphia.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/messages\/outbound\/opens",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "recipient",
+                            "tag",
+                            "client_name",
+                            "client_company",
+                            "client_family",
+                            "os_name",
+                            "os_family",
+                            "os_company",
+                            "platform",
+                            "country",
+                            "region",
+                            "city"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "openSingleMessage",
+            "description": "Opens for a single message.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of message opens to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "String",
+                    "info": "Number of messages to skip",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/opens\/{$data['messageId']}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getClickForMessage",
+            "description": "Get click for message.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of message opens to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of messages to skip.",
+                    "required": true
+                },
+                {
+                    "name": "recipient",
+                    "type": "String",
+                    "info": "Filter by To, Cc, Bcc.",
+                    "required": false
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": false
+                },
+                {
+                    "name": "clientName",
+                    "type": "String",
+                    "info": "Filter by client name, i.e. Outlook, Gmail.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_name"
+                    }
+                },
+                {
+                    "name": "clientCompany",
+                    "type": "String",
+                    "info": "Filter by company, i.e. Microsoft, Apple, Google.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_company"
+                    }
+                },
+                {
+                    "name": "clientFamily",
+                    "type": "String",
+                    "info": "Filter by client family, i.e. OS X, Chrome.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "client_family"
+                    }
+                },
+                {
+                    "name": "osName",
+                    "type": "String",
+                    "info": "Filter by full OS name and specific version, i.e. OS X 10.9 Mavericks, Windows 7.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_name"
+                    }
+                },
+                {
+                    "name": "osFamily",
+                    "type": "String",
+                    "info": "Filter by kind of OS used without specific version, i.e. OS X, Windows.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_family"
+                    }
+                },
+                {
+                    "name": "osCompany",
+                    "type": "String",
+                    "info": "Filter by company which produced the OS, i.e. Apple Computer, Inc., Microsoft Corporation.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "os_company"
+                    }
+                },
+                {
+                    "name": "platform",
+                    "type": "String",
+                    "info": "Filter by platform, i.e. webmail, desktop, mobile.",
+                    "required": false
+                },
+                {
+                    "name": "region",
+                    "type": "String",
+                    "info": "Filter by full name of region messages were opened in, i.e. Moscow, New York.",
+                    "required": false
+                },
+                {
+                    "name": "city",
+                    "type": "String",
+                    "info": "Filter by full name of city messages were opened in, i.e. Minneapolis, Philadelphia.",
+                    "required": false
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/clicks",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "recipient",
+                            "tag",
+                            "client_name",
+                            "client_company",
+                            "client_family",
+                            "os_name",
+                            "os_family",
+                            "os_company",
+                            "platform",
+                            "country",
+                            "region",
+                            "city"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getClicksForSingleMessage",
+            "description": "Clicks for a single message .",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "messageId",
+                    "type": "String",
+                    "info": "Id of the message.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of message opens to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "String",
+                    "info": "Number of messages to skip",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/clicks\/{$data['messageId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getListDomains",
+            "description": "Gets a list of domains containing an overview of the domain and authentication status.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of records to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "String",
+                    "info": "Number of records to skip.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getDomainDetails",
+            "description": "Gets all the details for a specific domain.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "domainId",
+                    "type": "String",
+                    "info": "Id of the domain.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains\/{$data['domainId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createDomain",
+            "description": "Create a domain.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "Domain name.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "returnPathDomain",
+                    "type": "String",
+                    "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "ReturnPathDomain"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "ReturnPathDomain"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateDomain",
+            "description": "Edit a domain.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "returnPathDomain",
+                    "type": "String",
+                    "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "ReturnPathDomain"
+                    }
+                },
+                {
+                    "name": "domainId",
+                    "type": "String",
+                    "info": "Id of the domain.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains\/{$data['domainId']}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "ReturnPathDomain"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteDomain",
+            "description": "Delete a domain.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "domainId",
+                    "type": "String",
+                    "info": "Id of the domain.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains\/{$data['domainId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "VerifySpfRecord",
+            "description": "Will query DNS for your domain and attempt to verify the SPF record contains the information for Postmark's servers.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "domainId",
+                    "type": "String",
+                    "info": "Id of the domain.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains\/{$data['domainId']}\/verifyspf",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "RotateDKIMKeys",
+            "description": "Creates a new DKIM key to replace your current key. Until the new DNS entries are confirmed, the pending values will be in DKIMPendingHost and DKIMPendingTextValue fields. After the new DKIM value is verified in DNS, the pending values will migrate to DKIMTextValue and DKIMPendingTextValue and Postmark will begin to sign emails with the new DKIM key.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "domainId",
+                    "type": "String",
+                    "info": "Id of the domain.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/domains\/{$data['domainId']}\/rotatedkim",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getListSenderSignatures",
+            "description": "Gets a list of sender signatures containing brief details associated with your account.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of records to return per request. Max 500.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "String",
+                    "info": "Number of records to skip.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "offset",
+                            "count"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSenderSignature",
+            "description": "Gets all the details for a specific sender signature.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "signatureId",
+                    "type": "String",
+                    "info": "Id of the signature.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders\/{$data['signatureId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createSignature",
+            "description": "Gets all the details for a specific sender signature.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "fromEmail",
+                    "type": "String",
+                    "info": "From email associated with sender signature.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "FromEmail"
+                    }
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "From name associated with sender signature.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "replyToEmail",
+                    "type": "String",
+                    "info": "Override for reply-to address.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReplyToEmail"
+                    }
+                },
+                {
+                    "name": "returnPathDomain",
+                    "type": "String",
+                    "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReturnPathDomain"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "FromEmail",
+                            "Name",
+                            "ReplyToEmail",
+                            "ReturnPathDomain"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateSignature",
+            "description": "Edit a signature.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "signatureId",
+                    "type": "Number",
+                    "info": "Id of the signature.",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "type": "String",
+                    "info": "From name associated with sender signature.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Name"
+                    }
+                },
+                {
+                    "name": "replyToEmail",
+                    "type": "String",
+                    "info": "Override for reply-to address.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReplyToEmail"
+                    }
+                },
+                {
+                    "name": "returnPathDomain",
+                    "type": "String",
+                    "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "ReturnPathDomain"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders\/{$data['signatureId']}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "Name",
+                            "ReplyToEmail",
+                            "ReturnPathDomain"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteSignature",
+            "description": "Delete a signature.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "signatureId",
+                    "type": "Number",
+                    "info": "Id of the signature.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders\/{$data['signatureId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "resendConfirmation",
+            "description": "Resend a confirmation.",
+            "args": [
+                {
+                    "name": "accountToken",
+                    "type": "credentials",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
+                    "required": true
+                },
+                {
+                    "name": "signatureId",
+                    "type": "Number",
+                    "info": "Id of the signature.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/senders\/{$data['signatureId']}\/resend",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getOutboundOverview",
+            "description": "Gets a brief overview of statistics for all of your outbound email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSentCounts",
+            "description": "Gets a total count of emails you\u2019ve sent out.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/sends",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBounceCounts",
+            "description": "Gets total counts of emails you\u2019ve sent out that have been returned as bounced.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/bounces",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getSpamComplaints",
+            "description": "Gets a total count of recipients who have marked your email as spam.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/spam",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTrackedEmailcounts",
+            "description": "Gets a total count of emails you\u2019ve sent with open tracking or link tracking enabled.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/tracked",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getEmailOpenCounts",
+            "description": "Gets total counts of recipients who opened your emails. This is only recorded when open tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/opens",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getEmailPlatformUsage",
+            "description": "Gets an overview of the platforms used to open your emails. This is only recorded when open tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/opens\/platforms",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getEmailClientUsage ",
+            "description": "Gets an overview of the email clients used to open your emails. This is only recorded when open tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/opens\/emailclients",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getEmailReadTimes",
+            "description": "Gets the length of time that recipients read emails along with counts for each time. This is only recorded when open tracking is enabled for that email. Read time tracking stops at 20 seconds, so any read times above that will appear in the 20s+ field.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/opens\/readtimes",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getClickCounts",
+            "description": "Gets total counts of unique links that were clicked.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/clicks",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBrowserPlatformUsage",
+            "description": "Gets an overview of the browser platforms used to open your emails. This is only recorded when Link Tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/clicks\/platforms",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getBrowserUsage",
+            "description": "Gets an overview of the browsers used to open links in your emails. This is only recorded when Link Tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/clicks\/browserfamilies",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getClickLocation",
+            "description": "Gets an overview of which part of the email links were clicked from (HTML or Text). This is only recorded when Link Tracking is enabled for that email.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "tag",
+                    "type": "String",
+                    "info": "Filter by tag.",
+                    "required": true
+                },
+                {
+                    "name": "fromDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats starting from the date specified (inclusive). e.g. 2014-01-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "fromdate"
+                    }
+                },
+                {
+                    "name": "toDate",
+                    "type": "DatePicker",
+                    "info": "Filter stats up to the date specified (inclusive). e.g. 2014-02-01",
+                    "required": false,
+                    "vendorSchema": {
+                        "format": "toFormat:{Y-m-d}",
+                        "name": "todate"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/stats\/outbound\/clicks\/location",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "todate",
+                            "fromdate",
+                            "tag"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createTriggerForTag",
+            "description": "Tags triggers let you activate special behavior when you send messages with a certain tag.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "matchName",
+                    "type": "String",
+                    "info": "Name of the tag that will activate this trigger.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "MatchName"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "String",
+                    "info": "Indicates if this trigger activates open tracking.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/tags",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "MatchName",
+                            "TrackOpens"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTrigger",
+            "description": "Get a single trigger.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "triggerId",
+                    "type": "String",
+                    "info": "Id of the trigger.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/tags\/{$data['triggerId']}",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "updateTrigger",
+            "description": "Edit a single trigger.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "matchName",
+                    "type": "String",
+                    "info": "Name of the tag that will activate this trigger.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "MatchName"
+                    }
+                },
+                {
+                    "name": "trackOpens",
+                    "type": "String",
+                    "info": "Indicates if this trigger activates open tracking.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "TrackOpens"
+                    }
+                },
+                {
+                    "name": "triggerId",
+                    "type": "String",
+                    "info": "Id of the trigger.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/tags\/{$data['triggerId']}}",
+                "method": "put",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "MatchName",
+                            "TrackOpens"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteTrigger",
+            "description": "Delete a single trigger.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "triggerId",
+                    "type": "String",
+                    "info": "Id of the trigger.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/tags\/{$data['triggerId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getTriggerByName",
+            "description": "Search triggers.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "Number",
+                    "info": "Number of records to return per request.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "Number",
+                    "info": "Number of records to skip.",
+                    "required": true
+                },
+                {
+                    "name": "matchName",
+                    "type": "String",
+                    "info": "Filter by delivery tag.",
+                    "required": false,
+                    "vendorSchema": {
+                        "name": "match_name"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/tags",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset",
+                            "matchName"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "createInboundRuleTrigger",
+            "description": "Create an inbound rule trigger.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "rule",
+                    "type": "String",
+                    "info": "Email address (or domain) that you would like to block from sending.",
+                    "required": true,
+                    "vendorSchema": {
+                        "name": "Rule"
+                    }
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/inboundrules",
+                "method": "post",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "json",
+                        "parameters": [
+                            "rule"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "deleteSingleTrigger",
+            "description": "Delete a single trigger.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "triggerId",
+                    "type": "String",
+                    "info": "Id of the trigger.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/inboundrules\/{$data['triggerId']}",
+                "method": "delete",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": []
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        },
+        {
+            "name": "getListInboundRuleTriggers",
+            "description": "List inbound rule triggers.",
+            "args": [
+                {
+                    "name": "serverToken",
+                    "type": "credentials",
+                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "required": true
+                },
+                {
+                    "name": "count",
+                    "type": "String",
+                    "info": "Number of records to return per request.",
+                    "required": true
+                },
+                {
+                    "name": "offset",
+                    "type": "String",
+                    "info": "Number of records to skip.",
+                    "required": true
+                }
+            ],
+            "vendorRequest": {
+                "url": "https:\/\/api.postmarkapp.com\/triggers\/inboundrules",
+                "method": "get",
+                "headers": {
+                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "Accept": "application\/json"
+                },
+                "requestParameters": [
+                    {
+                        "type": "query",
+                        "parameters": [
+                            "count",
+                            "offset"
+                        ]
+                    }
+                ]
+            },
+            "callbacks": [
+                {
+                    "name": "error",
+                    "info": "Error"
+                },
+                {
+                    "name": "success",
+                    "info": "Success"
+                }
+            ]
+        }
+    ]
+}
