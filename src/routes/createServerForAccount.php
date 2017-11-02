@@ -4,7 +4,7 @@ $app->post('/api/Postmark/createServerForAccount', function ($request, $response
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['serverToken']);
+    $validateRes = $checkRequest->validate($request, ['accountToken','name']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,7 +12,7 @@ $app->post('/api/Postmark/createServerForAccount', function ($request, $response
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken'];
+    $requiredParams = ['accountToken'=>'accountToken'];
     $optionalParams = ['name'=>'Name','color'=>'Color','dmtpApiActivated'=>'SmtpApiActivated','rawEmailEnabled'=>'RawEmailEnabled','deliveryHookUrl'=>'DeliveryHookUrl','inboundHookUrl'=>'InboundHookUrl','bounceHookUrl'=>'BounceHookUrl','includeBounceContentInHook'=>'IncludeBounceContentInHook','openHookUrl'=>'OpenHookUrl','postFirstOpenOnly'=>'PostFirstOpenOnly','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','clickHookUrl'=>'ClickHookUrl','inboundDomain'=>'InboundDomain','inboundSpamThreshold'=>'InboundSpamThreshold'];
     $bodyParams = [
        'json' => ['Name','Color','SmtpApiActivated','RawEmailEnabled','DeliveryHookUrl','InboundHookUrl','BounceHookUrl','IncludeBounceContentInHook','OpenHookUrl','PostFirstOpenOnly','TrackOpens','TrackLinks','ClickHookUrl','InboundDomain','InboundSpamThreshold']
@@ -28,7 +28,7 @@ $app->post('/api/Postmark/createServerForAccount', function ($request, $response
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
-    $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
+    $requestParams['headers'] = ["X-Postmark-Account-Token"=>"{$data['accountToken']}", "Accept"=>"application/json"];
      
 
     try {

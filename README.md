@@ -48,19 +48,20 @@ This endpoint is solely responsible for sending emails with Postmark through a s
 |-------------------------|------------|----------
 | serverToken             | credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | emails                  | Array      | Array of email.
-| to                      | String     | Recipient email address. Multiple addresses are comma separated. Max 50.
-| CcRecipientEmailAddress | String     | Cc recipient email address. Multiple addresses are comma separated. Max 50.
-| BccRecipientEmailAddress| String     | Bcc recipient email address. Multiple addresses are comma separated. Max 50.
-| subject                 | String     | Email subject.
-| tag                     | String     | Email tag that allows you to categorize outgoing emails and get detailed statistics.
-| htmlBody                | String     | If no TextBody specified HTML email message.
-| textBody                | String     | If no HtmlBody specified Plain text email message.
-| textBody                | String     | If no HtmlBody specified Plain text email message.
-| replyTo                 | String     | Reply To override email address. Defaults to the Reply To set in the sender signature.
-| headers                 | JSON       | Json list of custom headers to include.
-| trackOpens              | Select     | Activate open tracking for this email.
-| trackLinks              | Select     | Activate link tracking for links in the HTML or Text bodies of this email. 
-| attachments             | JSON       | List of attachments
+| emails.from                    | String     | The sender email address. Must have a registered and confirmed Sender Signature.
+| emails.to                      | String     | Recipient email address. Multiple addresses are comma separated. Max 50.
+| emails.CcRecipientEmailAddress | String     | Cc recipient email address. Multiple addresses are comma separated. Max 50.
+| emails.BccRecipientEmailAddress| String     | Bcc recipient email address. Multiple addresses are comma separated. Max 50.
+| emails.subject                 | String     | Email subject.
+| emails.tag                     | String     | Email tag that allows you to categorize outgoing emails and get detailed statistics.
+| emails.htmlBody                | String     | If no TextBody specified HTML email message.
+| emails.textBody                | String     | If no HtmlBody specified Plain text email message.
+| emails.textBody                | String     | If no HtmlBody specified Plain text email message.
+| emails.replyTo                 | String     | Reply To override email address. Defaults to the Reply To set in the sender signature.
+| emails.headers                 | JSON       | Json list of custom headers to include.
+| emails.trackOpens              | Select     | Activate open tracking for this email.
+| emails.trackLinks              | Select     | Activate link tracking for links in the HTML or Text bodies of this email. 
+| emails.attachments             | JSON       | List of attachments
 
 ## Postmark.getDeliveryStats
 Get delivery stats.Lets you access all reports regarding your bounces for a specific server.

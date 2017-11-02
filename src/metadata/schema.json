@@ -309,137 +309,137 @@
                             "vendorSchema": {
                                 "name": "From"
                             }
+                        },
+                        {
+                            "name": "to",
+                            "type": "String",
+                            "info": "Recipient email address. Multiple addresses are comma separated. Max 50.",
+                            "required": true,
+                            "vendorSchema": {
+                                "name": "To"
+                            }
+                        },
+                        {
+                            "name": "CcRecipientEmailAddress",
+                            "type": "String",
+                            "info": "Cc recipient email address. Multiple addresses are comma separated. Max 50.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "Cc"
+                            }
+                        },
+                        {
+                            "name": "BccRecipientEmailAddress",
+                            "type": "String",
+                            "info": "Bcc recipient email address. Multiple addresses are comma separated. Max 50.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "Bcc"
+                            }
+                        },
+                        {
+                            "name": "subject",
+                            "type": "String",
+                            "info": "Email subject.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "Subject"
+                            }
+                        },
+                        {
+                            "name": "tag",
+                            "type": "String",
+                            "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "Tag"
+                            }
+                        },
+                        {
+                            "name": "htmlBody",
+                            "type": "String",
+                            "info": "If no TextBody specified HTML email message.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "HtmlBody"
+                            }
+                        },
+                        {
+                            "name": "textBody",
+                            "type": "String",
+                            "info": "If no HtmlBody specified Plain text email message.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "TextBody"
+                            }
+                        },
+                        {
+                            "name": "textBody",
+                            "type": "String",
+                            "info": "If no HtmlBody specified Plain text email message.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "TextBody"
+                            }
+                        },
+                        {
+                            "name": "replyTo",
+                            "type": "String",
+                            "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "ReplyTo"
+                            }
+                        },
+                        {
+                            "name": "headers",
+                            "type": "JSON",
+                            "info": "Json list of custom headers to include.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "headers"
+                            }
+                        },
+                        {
+                            "name": "trackOpens",
+                            "type": "Select",
+                            "options": [
+                                "true",
+                                "false"
+                            ],
+                            "info": "Activate open tracking for this email.",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "TrackOpens"
+                            }
+                        },
+                        {
+                            "name": "trackLinks",
+                            "type": "Select",
+                            "options": [
+                                "None",
+                                "HtmlAndText",
+                                "HtmlOnly",
+                                "TextOnly"
+                            ],
+                            "info": "Activate link tracking for links in the HTML or Text bodies of this email. ",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "TrackLinks"
+                            }
+                        },
+                        {
+                            "name": "attachments",
+                            "type": "JSON",
+                            "info": "List of attachments",
+                            "required": false,
+                            "vendorSchema": {
+                                "name": "Attachments"
+                            }
                         }
                     ],
                     "info": "Array of email.",
                     "required": true
-                },
-                {
-                    "name": "to",
-                    "type": "String",
-                    "info": "Recipient email address. Multiple addresses are comma separated. Max 50.",
-                    "required": true,
-                    "vendorSchema": {
-                        "name": "To"
-                    }
-                },
-                {
-                    "name": "CcRecipientEmailAddress",
-                    "type": "String",
-                    "info": "Cc recipient email address. Multiple addresses are comma separated. Max 50.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Cc"
-                    }
-                },
-                {
-                    "name": "BccRecipientEmailAddress",
-                    "type": "String",
-                    "info": "Bcc recipient email address. Multiple addresses are comma separated. Max 50.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Bcc"
-                    }
-                },
-                {
-                    "name": "subject",
-                    "type": "String",
-                    "info": "Email subject.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Subject"
-                    }
-                },
-                {
-                    "name": "tag",
-                    "type": "String",
-                    "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Tag"
-                    }
-                },
-                {
-                    "name": "htmlBody",
-                    "type": "String",
-                    "info": "If no TextBody specified HTML email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "HtmlBody"
-                    }
-                },
-                {
-                    "name": "textBody",
-                    "type": "String",
-                    "info": "If no HtmlBody specified Plain text email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TextBody"
-                    }
-                },
-                {
-                    "name": "textBody",
-                    "type": "String",
-                    "info": "If no HtmlBody specified Plain text email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TextBody"
-                    }
-                },
-                {
-                    "name": "replyTo",
-                    "type": "String",
-                    "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "ReplyTo"
-                    }
-                },
-                {
-                    "name": "headers",
-                    "type": "JSON",
-                    "info": "Json list of custom headers to include.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "headers"
-                    }
-                },
-                {
-                    "name": "trackOpens",
-                    "type": "Select",
-                    "options": [
-                        "true",
-                        "false"
-                    ],
-                    "info": "Activate open tracking for this email.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TrackOpens"
-                    }
-                },
-                {
-                    "name": "trackLinks",
-                    "type": "Select",
-                    "options": [
-                        "None",
-                        "HtmlAndText",
-                        "HtmlOnly",
-                        "TextOnly"
-                    ],
-                    "info": "Activate link tracking for links in the HTML or Text bodies of this email. ",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TrackLinks"
-                    }
-                },
-                {
-                    "name": "attachments",
-                    "type": "JSON",
-                    "info": "List of attachments",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Attachments"
-                    }
                 }
             ],
             "vendorRequest": {
@@ -654,7 +654,7 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}",
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceId']}",
                 "method": "get",
                 "headers": {
                     "X-Postmark-Server-Token": "{$data['serverToken']}",
@@ -691,7 +691,7 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}\/dump",
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceId']}\/dump",
                 "method": "get",
                 "headers": {
                     "X-Postmark-Server-Token": "{$data['serverToken']}",
@@ -728,12 +728,11 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceid']}\/activate",
+                "url": "https:\/\/api.postmarkapp.com\/bounces\/{$data['bounceId']}\/activate",
                 "method": "put",
                 "headers": {
                     "X-Postmark-Server-Token": "{$data['serverToken']}",
-                    "Accept": "application\/json",
-                    "Content-Type": "application\/json"
+                    "Accept": "application\/json"
                 },
                 "requestParameters": []
             },
@@ -1287,15 +1286,6 @@
                     }
                 },
                 {
-                    "name": "textBody",
-                    "type": "String",
-                    "info": "If no HtmlBody specified Plain text email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TextBody"
-                    }
-                },
-                {
                     "name": "replyTo",
                     "type": "String",
                     "info": "Reply To override email address. Defaults to the Reply To set in the sender signature.",
@@ -1691,9 +1681,9 @@
             "description": "Lets you manage servers for a specific account.",
             "args": [
                 {
-                    "name": "serverToken",
+                    "name": "accountToken",
                     "type": "credentials",
-                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
                     "required": true
                 },
                 {
@@ -1707,7 +1697,7 @@
                 "url": "https:\/\/api.postmarkapp.com\/servers\/{$data['serverId']}",
                 "method": "get",
                 "headers": {
-                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
                     "Accept": "application\/json"
                 },
                 "requestParameters": []
@@ -1728,16 +1718,16 @@
             "description": "Create a server for account.",
             "args": [
                 {
-                    "name": "serverToken",
+                    "name": "accountToken",
                     "type": "credentials",
-                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
                     "required": true
                 },
                 {
                     "name": "name",
                     "type": "String",
                     "info": "Name of server.",
-                    "required": false,
+                    "required": true,
                     "vendorSchema": {
                         "name": "Name"
                     }
@@ -1908,7 +1898,7 @@
                 "url": "https:\/\/api.postmarkapp.com\/servers",
                 "method": "post",
                 "headers": {
-                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
                     "Accept": "application\/json"
                 },
                 "requestParameters": [
@@ -1950,9 +1940,9 @@
             "description": "Update a server for account.",
             "args": [
                 {
-                    "name": "serverToken",
+                    "name": "accountToken",
                     "type": "credentials",
-                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
                     "required": true
                 },
                 {
@@ -2136,7 +2126,7 @@
                 "url": "https:\/\/api.postmarkapp.com\/servers\/{$data['serverId']}",
                 "method": "put",
                 "headers": {
-                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
                     "Accept": "application\/json"
                 },
                 "requestParameters": [
@@ -2178,9 +2168,9 @@
             "description": "List servers.",
             "args": [
                 {
-                    "name": "serverToken",
+                    "name": "accountToken",
                     "type": "credentials",
-                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
                     "required": true
                 },
                 {
@@ -2206,7 +2196,7 @@
                 "url": "https:\/\/api.postmarkapp.com\/servers",
                 "method": "get",
                 "headers": {
-                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
                     "Accept": "application\/json"
                 },
                 "requestParameters": [
@@ -2789,7 +2779,7 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/api.postmarkapp.com\/messages\/messages\/outbound\/opens",
+                "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/opens",
                 "method": "get",
                 "headers": {
                     "X-Postmark-Server-Token": "{$data['serverToken']}",

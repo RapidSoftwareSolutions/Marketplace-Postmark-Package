@@ -22,12 +22,12 @@ $app->post('/api/Postmark/activateBounce', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/bounces/{$data['bounceid']}/activate";
+    $query_str = "https://api.postmarkapp.com/bounces/{$data['bounceId']}/activate";
 
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
-    $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json", "Content-Type"=>"application/json"];
+    $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
      
 
     try {

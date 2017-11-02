@@ -4,7 +4,7 @@ $app->post('/api/Postmark/getServerForAccount', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['serverToken','serverId']);
+    $validateRes = $checkRequest->validate($request, ['accountToken','serverId']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,7 +12,7 @@ $app->post('/api/Postmark/getServerForAccount', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','serverId'=>'serverId'];
+    $requiredParams = ['accountToken'=>'accountToken','serverId'=>'serverId'];
     $optionalParams = [];
     $bodyParams = [
     ];
@@ -27,7 +27,7 @@ $app->post('/api/Postmark/getServerForAccount', function ($request, $response) {
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
-    $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
+    $requestParams['headers'] = ["X-Postmark-Account-Token"=>"{$data['accountToken']}", "Accept"=>"application/json"];
      
 
     try {

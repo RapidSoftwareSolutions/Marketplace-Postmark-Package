@@ -23,7 +23,7 @@ $app->post('/api/Postmark/openMessage', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/messages/messages/outbound/opens";
+    $query_str = "https://api.postmarkapp.com/messages/outbound/opens";
 
     
 

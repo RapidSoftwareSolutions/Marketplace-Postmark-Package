@@ -22,7 +22,7 @@ $app->post('/api/Postmark/getBounce', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/bounces/{$data['bounceid']}";
+    $query_str = "https://api.postmarkapp.com/bounces/{$data['bounceId']}";
 
     
 
