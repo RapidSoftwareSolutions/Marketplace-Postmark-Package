@@ -79,7 +79,7 @@ $app->post('/api/Postmark/getBounces', function ($request, $response) {
         $result['contextWrites']['to']['status_msg'] = 'Something went wrong inside the package.';
 
     }
-
+    exit();
     return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($result);
 
 });
