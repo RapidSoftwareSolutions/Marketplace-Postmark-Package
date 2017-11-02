@@ -23,7 +23,7 @@ $app->post('/api/Postmark/updateTrigger', function ($request, $response) {
     
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/triggers/tags/{$data['triggerId']}}";
+    $query_str = "https://api.postmarkapp.com/triggers/tags/{$data['triggerId']}";
 
     
 

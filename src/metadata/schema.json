@@ -2340,9 +2340,9 @@
             "description": "Delete a server.",
             "args": [
                 {
-                    "name": "serverToken",
+                    "name": "accountToken",
                     "type": "credentials",
-                    "info": "This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.",
+                    "info": "This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.",
                     "required": true
                 },
                 {
@@ -2393,7 +2393,7 @@
                 "url": "https:\/\/api.postmarkapp.com\/messages\/outbound\/{$data['messageId']}\/details",
                 "method": "get",
                 "headers": {
-                    "X-Postmark-Server-Token": "{$data['serverToken']}",
+                    "X-Postmark-Account-Token": "{$data['accountToken']}",
                     "Accept": "application\/json"
                 },
                 "requestParameters": []
@@ -4682,9 +4682,10 @@
                 },
                 {
                     "name": "trackOpens",
-                    "type": "String",
+                    "type":"Select",
+                    "options":["true","false"],
                     "info": "Indicates if this trigger activates open tracking.",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "TrackOpens"
                     }
