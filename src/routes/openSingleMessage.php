@@ -32,7 +32,7 @@ $app->post('/api/Postmark/openSingleMessage', function ($request, $response) {
      
 
     try {
-        $resp = $client->put($query_str, $requestParams);
+        $resp = $client->get($query_str, $requestParams);
         $responseBody = $resp->getBody()->getContents();
 
         if(in_array($resp->getStatusCode(), ['200', '201', '202', '203', '204'])) {

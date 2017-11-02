@@ -15,7 +15,7 @@ $app->post('/api/Postmark/getListSenderSignatures', function ($request, $respons
     $requiredParams = ['accountToken'=>'accountToken','count'=>'count','offset'=>'offset'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['offset','count']
+       'query' => ['offset','count']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);

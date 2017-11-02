@@ -27,11 +27,11 @@ $app->post('/api/Postmark/RotateDKIMKeys', function ($request, $response) {
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
-    $requestParams['headers'] = ["X-Postmark-Account-Token"=>"{$data['accountToken']}", "Accept"=>"application/json"];
+    $requestParams['headers'] = ["X-Postmark-Account-Token"=>"{$data['accountToken']}", "Accept"=>"application/json","Content-Type"=>"application/json"];
      
 
     try {
-        $resp = $client->put($query_str, $requestParams);
+        $resp = $client->post($query_str, $requestParams);
         $responseBody = $resp->getBody()->getContents();
 
         if(in_array($resp->getStatusCode(), ['200', '201', '202', '203', '204'])) {

@@ -4,7 +4,7 @@ $app->post('/api/Postmark/sendEmailWithTemplate', function ($request, $response)
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['serverToken','templateId','templateModel','inlineCss','from','to']);
+    $validateRes = $checkRequest->validate($request, ['serverToken','templateId','templateModel','from','to']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,24 +12,23 @@ $app->post('/api/Postmark/sendEmailWithTemplate', function ($request, $response)
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','templateId'=>'TemplateId','templateModel'=>'TemplateModel','inlineCss'=>'TemplateModel','from'=>'From','to'=>'To'];
-    $optionalParams = ['CcRecipientEmailAddress'=>'Cc','BccRecipientEmailAddress'=>'Bcc','subject'=>'Subject','tag'=>'Tag','htmlBody'=>'HtmlBody','textBody'=>'TextBody','textBody'=>'TextBody','replyTo'=>'ReplyTo','headers'=>'headers','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','attachments'=>'Attachments'];
+    $requiredParams = ['serverToken'=>'serverToken','templateId'=>'TemplateId','templateModel'=>'TemplateModel','from'=>'From','to'=>'To'];
+    $optionalParams = ['CcRecipientEmailAddress'=>'Cc','BccRecipientEmailAddress'=>'Bcc','inlineCss'=>'InlineCss','subject'=>'Subject','tag'=>'Tag','htmlBody'=>'HtmlBody','textBody'=>'TextBody','textBody'=>'TextBody','replyTo'=>'ReplyTo','headers'=>'headers','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','attachments'=>'Attachments'];
     $bodyParams = [
        'json' => ['TemplateId','TemplateModel','InlineCss','From','To','Cc','Bcc','Subject','Tag','HtmlBody','TextBody','ReplyTo','Headers','TrackOpens','TrackLinks','Attachments']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/email/withTemplate/";
+    $query_str = "https://api.postmarkapp.com/email/withTemplate";
 
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
-     
+
 
     try {
         $resp = $client->post($query_str, $requestParams);

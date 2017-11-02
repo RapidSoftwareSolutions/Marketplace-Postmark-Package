@@ -84,7 +84,7 @@ Lets you access all reports regarding your bounces for a specific server.
 | messageID  | String     | Filter by messageID.
 | fromDate   | DatePicker | Filter messages starting from the date specified (inclusive). e.g. 2014-02-01
 | toDate     | DatePicker | Filter messages up to the date specified (inclusive). e.g. 2014-02-01
-| type       | Select     | Bounce types.See more in readme.
+| type       | Select     | Bounce types.See more in [here](https://postmarkapp.com/developer/api/bounce-api#bounce-types).
 
 ## Postmark.getBounce
 Get a single bounce.
@@ -132,9 +132,9 @@ Create a template.
 |------------|------------|----------
 | serverToken| credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | name       | String     | Name of template.
-| subject    | String     | The content to use for the Subject when this template is used to send email. See readme for more information.
-| textBody   | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.
-| htmlBody   | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.
+| subject    | String     | The content to use for the Subject when this template is used to send email. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| textBody   | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| htmlBody   | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
 
 ## Postmark.updateTemplate
 Edit a template.
@@ -144,9 +144,9 @@ Edit a template.
 | serverToken| credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | templateId | Number     | ID of template.
 | name       | String     | Name of template.
-| subject    | String     | The content to use for the Subject when this template is used to send email. See readme for more information.
-| textBody   | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.
-| htmlBody   | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.
+| subject    | String     | The content to use for the Subject when this template is used to send email. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| textBody   | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| htmlBody   | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
 
 ## Postmark.getTemplatesList
 Get list of templates.
@@ -172,10 +172,9 @@ Create a template.
 |---------------------------|------------|----------
 | serverToken               | credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | name                      | String     | Name of template.
-| subject                   | String     | The content to use for the Subject when this template is used to send email. See readme for more information.
-| textBody                  | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See readme for more information.
-| htmlBody                  | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See readme for more information.
-| testRenderModel           | JSON       | The model to be used when rendering test content.See more in readme.
+| subject                   | String     | The content to use for the Subject when this template is used to send email. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| textBody                  | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
+| htmlBody                  | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
 | inlineCssForHtmlTestRender| Select     | When HtmlBody is specified, the test render will have style blocks inlined as style attributes on matching html elements. You may disable the css inlining behavior by passing false for this parameter.
 
 ## Postmark.sendEmailWithTemplate
@@ -458,7 +457,7 @@ Create a domain.
 |-----------------|------------|----------
 | accountToken    | credentials| This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.
 | name            | String     | Domain name.
-| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.
+| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see more [here](http://support.postmarkapp.com/article/910-adding-a-custom-return-path-domain).
 
 ## Postmark.updateDomain
 Edit a domain.
@@ -466,7 +465,7 @@ Edit a domain.
 | Field           | Type       | Description
 |-----------------|------------|----------
 | accountToken    | credentials| This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.
-| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.
+| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see more [here](http://support.postmarkapp.com/article/910-adding-a-custom-return-path-domain).
 | domainId        | String     | Id of the domain.
 
 ## Postmark.deleteDomain
@@ -519,7 +518,7 @@ Gets all the details for a specific sender signature.
 | fromEmail       | String     | From email associated with sender signature.
 | name            | String     | From name associated with sender signature.
 | replyToEmail    | String     | Override for reply-to address.
-| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.
+| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see more [here](http://support.postmarkapp.com/article/910-adding-a-custom-return-path-domain).
 
 ## Postmark.updateSignature
 Edit a signature.
@@ -530,7 +529,7 @@ Edit a signature.
 | signatureId     | Number     | Id of the signature.
 | name            | String     | From name associated with sender signature.
 | replyToEmail    | String     | Override for reply-to address.
-| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.
+| returnPathDomain| String     | A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see more [here](http://support.postmarkapp.com/article/910-adding-a-custom-return-path-domain).
 
 ## Postmark.deleteSignature
 Delete a signature.

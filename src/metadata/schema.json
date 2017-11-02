@@ -230,7 +230,7 @@
                         },
                         {
                             "name": "ContentType",
-                            "type": "File",
+                            "type": "String",
                             "info": "contentType of file.",
                             "required": true
                         },
@@ -1193,7 +1193,7 @@
                 },
                 {
                     "name": "templateModel",
-                    "type": "Number",
+                    "type": "JSON",
                     "info": "The model to be applied to the specified template to generate HtmlBody, TextBody, and Subject.",
                     "required": true,
                     "vendorSchema": {
@@ -1208,7 +1208,7 @@
                         "false"
                     ],
                     "info": "By default, if the specified template contains an HTMLBody, we will apply the style blocks as inline attributes to the rendered HTML content. You may opt-out of this behavior by passing false for this request field.",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "TemplateModel"
                     }
@@ -1382,7 +1382,7 @@
                 }
             ],
             "vendorRequest": {
-                "url": "https:\/\/api.postmarkapp.com\/email\/withTemplate\/",
+                "url": "https:\/\/api.postmarkapp.com\/email\/withTemplate",
                 "method": "post",
                 "headers": {
                     "X-Postmark-Server-Token": "{$data['serverToken']}",
@@ -3428,7 +3428,7 @@
                 },
                 "requestParameters": [
                     {
-                        "type": "json",
+                        "type": "query",
                         "parameters": [
                             "offset",
                             "count"
@@ -3722,7 +3722,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -3788,7 +3788,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -3854,7 +3854,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -3920,7 +3920,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -3986,7 +3986,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4052,7 +4052,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4118,7 +4118,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4171,7 +4171,7 @@
             ]
         },
         {
-            "name": "getEmailClientUsage ",
+            "name": "getEmailClientUsage",
             "description": "Gets an overview of the email clients used to open your emails. This is only recorded when open tracking is enabled for that email.",
             "args": [
                 {
@@ -4184,7 +4184,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4250,7 +4250,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4316,7 +4316,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4382,7 +4382,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4448,7 +4448,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4514,7 +4514,7 @@
                     "name": "tag",
                     "type": "String",
                     "info": "Filter by tag.",
-                    "required": true
+                    "required": false
                 },
                 {
                     "name": "fromDate",
@@ -4587,9 +4587,10 @@
                 },
                 {
                     "name": "trackOpens",
-                    "type": "String",
+                    "type":"Select",
+                    "options":["true","false"],
                     "info": "Indicates if this trigger activates open tracking.",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "TrackOpens"
                     }

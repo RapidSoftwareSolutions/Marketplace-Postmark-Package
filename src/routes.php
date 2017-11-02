@@ -54,7 +54,7 @@ $routes = [
     'getTrackedEmailcounts',
     'getEmailOpenCounts',
     'getEmailPlatformUsage',
-    'getEmailClientUsage ',
+    'getEmailClientUsage',
     'getEmailReadTimes',
     'getClickCounts',
     'getBrowserPlatformUsage',
