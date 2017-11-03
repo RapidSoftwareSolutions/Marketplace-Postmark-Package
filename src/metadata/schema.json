@@ -63,7 +63,7 @@
     "blocks": [
         {
             "name": "sendEmail",
-            "description": "This endpoint is solely responsible for sending emails with Postmark through a specific server.",
+            "description": "Send single email.This endpoint is solely responsible for sending emails with Postmark through a specific server.",
             "args": [
                 {
                     "name": "serverToken",
@@ -289,7 +289,7 @@
         },
         {
             "name": "sendEmails",
-            "description": "This endpoint is solely responsible for sending emails with Postmark through a specific server.",
+            "description": "Send batch emails.This endpoint is solely responsible for sending emails with Postmark through a specific server.",
             "args": [
                 {
                     "name": "serverToken",
@@ -1073,7 +1073,7 @@
         },
         {
             "name": "validateTemplate",
-            "description": "Create a template.",
+            "description": "Validate a template.",
             "args": [
                 {
                     "name": "serverToken",
@@ -1250,39 +1250,12 @@
                     }
                 },
                 {
-                    "name": "subject",
-                    "type": "String",
-                    "info": "Email subject.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "Subject"
-                    }
-                },
-                {
                     "name": "tag",
                     "type": "String",
                     "info": "Email tag that allows you to categorize outgoing emails and get detailed statistics.",
                     "required": false,
                     "vendorSchema": {
                         "name": "Tag"
-                    }
-                },
-                {
-                    "name": "htmlBody",
-                    "type": "String",
-                    "info": "If no TextBody specified HTML email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "HtmlBody"
-                    }
-                },
-                {
-                    "name": "textBody",
-                    "type": "String",
-                    "info": "If no HtmlBody specified Plain text email message.",
-                    "required": false,
-                    "vendorSchema": {
-                        "name": "TextBody"
                     }
                 },
                 {
@@ -1357,13 +1330,13 @@
                         },
                         {
                             "name": "Content",
-                            "type": "File",
-                            "info": "File url.",
+                            "type": "String",
+                            "info": "Binary file.",
                             "required": true
                         },
                         {
                             "name": "ContentType",
-                            "type": "File",
+                            "type": "String",
                             "info": "contentType of file.",
                             "required": true
                         },
@@ -1479,7 +1452,6 @@
                     "options": [
                         "Purple",
                         "Blue",
-                        "Turqoise",
                         "Green",
                         "Red",
                         "Yellow",
@@ -1492,7 +1464,7 @@
                     }
                 },
                 {
-                    "name": "dmtpApiActivated",
+                    "name": "smtpApiActivated",
                     "type": "Select",
                     "options": [
                         "true",
@@ -1627,7 +1599,7 @@
                 },
                 {
                     "name": "inboundSpamThreshold",
-                    "type": "String",
+                    "type": "Number",
                     "info": "The maximum spam score for an inbound message before it's blocked.",
                     "required": false,
                     "vendorSchema": {
@@ -1738,7 +1710,6 @@
                     "options": [
                         "Purple",
                         "Blue",
-                        "Turqoise",
                         "Green",
                         "Red",
                         "Yellow",
@@ -1751,7 +1722,7 @@
                     }
                 },
                 {
-                    "name": "dmtpApiActivated",
+                    "name": "smtpApiActivated",
                     "type": "Select",
                     "options": [
                         "true",
@@ -1886,7 +1857,7 @@
                 },
                 {
                     "name": "inboundSpamThreshold",
-                    "type": "String",
+                    "type": "Number",
                     "info": "The maximum spam score for an inbound message before it's blocked.",
                     "required": false,
                     "vendorSchema": {
@@ -1966,7 +1937,6 @@
                     "options": [
                         "Purple",
                         "Blue",
-                        "Turqoise",
                         "Green",
                         "Red",
                         "Yellow",
@@ -1979,7 +1949,7 @@
                     }
                 },
                 {
-                    "name": "dmtpApiActivated",
+                    "name": "smtpApiActivated",
                     "type": "Select",
                     "options": [
                         "true",
@@ -2114,7 +2084,7 @@
                 },
                 {
                     "name": "inboundSpamThreshold",
-                    "type": "String",
+                    "type": "Number",
                     "info": "The maximum spam score for an inbound message before it's blocked.",
                     "required": false,
                     "vendorSchema": {
@@ -2499,8 +2469,11 @@
                     "name": "status",
                     "type": "Select",
                     "options": [
+                        "blocked",
+                        "processed",
                         "queued",
-                        "sent"
+                        "failed",
+                        "scheduled"
                     ],
                     "info": "Filter by status (queued or sent)",
                     "required": false
@@ -2836,13 +2809,13 @@
                 },
                 {
                     "name": "count",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of message opens to return per request. Max 500.",
                     "required": true
                 },
                 {
                     "name": "offset",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of messages to skip",
                     "required": true
                 }
@@ -3040,13 +3013,13 @@
                 },
                 {
                     "name": "count",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of message opens to return per request. Max 500.",
                     "required": true
                 },
                 {
                     "name": "offset",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of messages to skip",
                     "required": true
                 }
@@ -3091,13 +3064,13 @@
                 },
                 {
                     "name": "count",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of records to return per request. Max 500.",
                     "required": true
                 },
                 {
                     "name": "offset",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of records to skip.",
                     "required": true
                 }
@@ -3198,7 +3171,7 @@
                     "name": "returnPathDomain",
                     "type": "String",
                     "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "ReturnPathDomain"
                     }
@@ -3246,7 +3219,7 @@
                     "name": "returnPathDomain",
                     "type": "String",
                     "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
-                    "required": true,
+                    "required": false,
                     "vendorSchema": {
                         "name": "ReturnPathDomain"
                     }
@@ -3408,13 +3381,13 @@
                 },
                 {
                     "name": "count",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of records to return per request. Max 500.",
                     "required": true
                 },
                 {
                     "name": "offset",
-                    "type": "String",
+                    "type": "Number",
                     "info": "Number of records to skip.",
                     "required": true
                 }
@@ -3486,7 +3459,7 @@
         },
         {
             "name": "createSignature",
-            "description": "Gets all the details for a specific sender signature.",
+            "description": "Create a signature.",
             "args": [
                 {
                     "name": "accountToken",

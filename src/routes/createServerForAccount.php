@@ -13,7 +13,7 @@ $app->post('/api/Postmark/createServerForAccount', function ($request, $response
     }
 
     $requiredParams = ['accountToken'=>'accountToken'];
-    $optionalParams = ['name'=>'Name','color'=>'Color','dmtpApiActivated'=>'SmtpApiActivated','rawEmailEnabled'=>'RawEmailEnabled','deliveryHookUrl'=>'DeliveryHookUrl','inboundHookUrl'=>'InboundHookUrl','bounceHookUrl'=>'BounceHookUrl','includeBounceContentInHook'=>'IncludeBounceContentInHook','openHookUrl'=>'OpenHookUrl','postFirstOpenOnly'=>'PostFirstOpenOnly','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','clickHookUrl'=>'ClickHookUrl','inboundDomain'=>'InboundDomain','inboundSpamThreshold'=>'InboundSpamThreshold'];
+    $optionalParams = ['name'=>'Name','color'=>'Color','smtpApiActivated'=>'SmtpApiActivated','rawEmailEnabled'=>'RawEmailEnabled','deliveryHookUrl'=>'DeliveryHookUrl','inboundHookUrl'=>'InboundHookUrl','bounceHookUrl'=>'BounceHookUrl','includeBounceContentInHook'=>'IncludeBounceContentInHook','openHookUrl'=>'OpenHookUrl','postFirstOpenOnly'=>'PostFirstOpenOnly','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','clickHookUrl'=>'ClickHookUrl','inboundDomain'=>'InboundDomain','inboundSpamThreshold'=>'InboundSpamThreshold'];
     $bodyParams = [
        'json' => ['Name','Color','SmtpApiActivated','RawEmailEnabled','DeliveryHookUrl','InboundHookUrl','BounceHookUrl','IncludeBounceContentInHook','OpenHookUrl','PostFirstOpenOnly','TrackOpens','TrackLinks','ClickHookUrl','InboundDomain','InboundSpamThreshold']
     ];

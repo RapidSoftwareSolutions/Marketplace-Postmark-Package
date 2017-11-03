@@ -4,7 +4,7 @@ $app->post('/api/Postmark/updateDomain', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['accountToken','returnPathDomain','domainId']);
+    $validateRes = $checkRequest->validate($request, ['accountToken','domainId']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,8 +12,8 @@ $app->post('/api/Postmark/updateDomain', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['accountToken'=>'accountToken','returnPathDomain'=>'ReturnPathDomain','domainId'=>'domainId'];
-    $optionalParams = [];
+    $requiredParams = ['accountToken'=>'accountToken','domainId'=>'domainId'];
+    $optionalParams = ['returnPathDomain'=>'ReturnPathDomain'];
     $bodyParams = [
        'json' => ['ReturnPathDomain']
     ];

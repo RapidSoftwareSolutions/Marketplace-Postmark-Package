@@ -21,7 +21,7 @@ Postmark helps deliver and track transactional emails for web applications. In a
  
  
 ## Postmark.sendEmail
-This endpoint is solely responsible for sending emails with Postmark through a specific server.
+Send single email.This endpoint is solely responsible for sending emails with Postmark through a specific server.
 
 | Field                   | Type       | Description
 |-------------------------|------------|----------
@@ -52,7 +52,7 @@ This endpoint is solely responsible for sending emails with Postmark through a s
 ```
 
 ## Postmark.sendEmails
-This endpoint is solely responsible for sending emails with Postmark through a specific server.
+Send batch emails.This endpoint is solely responsible for sending emails with Postmark through a specific server.
 
 | Field                   | Type       | Description
 |-------------------------|------------|----------
@@ -186,7 +186,7 @@ Delete a template.
 | templateId | Number     | ID of template.
 
 ## Postmark.validateTemplate
-Create a template.
+Validate a template.
 
 | Field                     | Type       | Description
 |---------------------------|------------|----------
@@ -196,6 +196,14 @@ Create a template.
 | textBody                  | String     | The content to use for the HtmlBody when this template is used to send email. Required if htmlBody is not specified. See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
 | htmlBody                  | String     | The content to use for the TextBody when this template is used to send email. Required if textBody is not specified.  See [documentation](http://support.postmarkapp.com/article/1077-template-syntax) for more information.
 | inlineCssForHtmlTestRender| Select     | When HtmlBody is specified, the test render will have style blocks inlined as style attributes on matching html elements. You may disable the css inlining behavior by passing false for this parameter.
+| testRenderModel                  | JSON     | The model to be used when rendering test content.
+
+##### Example for testRenderModel
+```
+{
+  "userName": "bobby joe"
+}
+```
 
 ## Postmark.sendEmailWithTemplate
 Send email with template.
@@ -212,9 +220,6 @@ Send email with template.
 | BccRecipientEmailAddress| String     | Bcc recipient email address. Multiple addresses are comma separated. Max 50.
 | subject                 | String     | Email subject.
 | tag                     | String     | Email tag that allows you to categorize outgoing emails and get detailed statistics.
-| htmlBody                | String     | If no TextBody specified HTML email message.
-| textBody                | String     | If no HtmlBody specified Plain text email message.
-| textBody                | String     | If no HtmlBody specified Plain text email message.
 | replyTo                 | String     | Reply To override email address. Defaults to the Reply To set in the sender signature.
 | headers                 | Array      | List of custom headers to include.
 | trackOpens              | Select     | Activate open tracking for this email.
@@ -236,7 +241,7 @@ Edit the server.
 | serverToken               | credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | name                      | String     | Name of server.
 | color                     | Select     | Color of the server in the rack screen.
-| dmtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
+| smtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
 | rawEmailEnabled           | Select     | Enable raw email to be sent with inbound.
 | deliveryHookUrl           | String     | URL to POST to every time email is delivered.
 | inboundHookUrl            | String     | URL to POST to every time an inbound event occurs.
@@ -248,7 +253,7 @@ Edit the server.
 | trackLinks                | Select     | Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. 
 | clickHookUrl              | String     | URL to POST to when a unique click event occurs.
 | inboundDomain             | String     | Inbound domain for MX setup.
-| inboundSpamThreshold      | String     | The maximum spam score for an inbound message before it's blocked.
+| inboundSpamThreshold      | Number     | The maximum spam score for an inbound message before it's blocked.
 
 ## Postmark.getServerForAccount
 Lets you manage servers for a specific account.
@@ -266,7 +271,7 @@ Create a server for account.
 | serverToken               | credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | name                      | String     | Name of server.
 | color                     | Select     | Color of the server in the rack screen.
-| dmtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
+| smtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
 | rawEmailEnabled           | Select     | Enable raw email to be sent with inbound.
 | deliveryHookUrl           | String     | URL to POST to every time email is delivered.
 | inboundHookUrl            | String     | URL to POST to every time an inbound event occurs.
@@ -278,7 +283,7 @@ Create a server for account.
 | trackLinks                | Select     | Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. 
 | clickHookUrl              | String     | URL to POST to when a unique click event occurs.
 | inboundDomain             | String     | Inbound domain for MX setup.
-| inboundSpamThreshold      | String     | The maximum spam score for an inbound message before it's blocked.
+| inboundSpamThreshold      | Number     | The maximum spam score for an inbound message before it's blocked.
 
 ## Postmark.updateServerForAccount
 Update a server for account.
@@ -289,7 +294,7 @@ Update a server for account.
 | serverId                  | Number     | Id of the server.
 | name                      | String     | Name of server.
 | color                     | Select     | Color of the server in the rack screen.
-| dmtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
+| smtpApiActivated          | Select     | Specifies whether or not SMTP is enabled on this server.
 | rawEmailEnabled           | Select     | Enable raw email to be sent with inbound.
 | deliveryHookUrl           | String     | URL to POST to every time email is delivered.
 | inboundHookUrl            | String     | URL to POST to every time an inbound event occurs.
@@ -301,7 +306,7 @@ Update a server for account.
 | trackLinks                | Select     | Indicates if all emails being sent through this server should have link tracking enabled for links in their HTML or Text bodies. 
 | clickHookUrl              | String     | URL to POST to when a unique click event occurs.
 | inboundDomain             | String     | Inbound domain for MX setup.
-| inboundSpamThreshold      | String     | The maximum spam score for an inbound message before it's blocked.
+| inboundSpamThreshold      | Number     | The maximum spam score for an inbound message before it's blocked.
 
 ## Postmark.getServersForAccounts
 List servers.
@@ -365,7 +370,7 @@ Inbound message search.
 | fromEmail  | String     | Filter by the sender email address.
 | recipient  | String     | Filter by the user who was receiving the email.
 | tag        | String     | Filter by tag.
-| status     | Select     | Filter by status (queued or sent)
+| status     | Select     | Filter by status. (blocked, processed, queued, failed, scheduled)
 | fromDate   | DatePicker | Filter messages starting from the date specified (inclusive). e.g. 2014-02-01
 | toDate     | DatePicker | Filter messages up to the date specified (inclusive). e.g. 2014-02-01
 
@@ -420,8 +425,8 @@ Opens for a single message.
 |------------|------------|----------
 | serverToken| credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | messageId  | String     | Id of the message.
-| count      | String     | Number of message opens to return per request. Max 500.
-| offset     | String     | Number of messages to skip
+| count      | Number     | Number of message opens to return per request. Max 500.
+| offset     | Number     | Number of messages to skip
 
 ## Postmark.getClickForMessage
 Get click for message.
@@ -450,8 +455,8 @@ Clicks for a single message .
 |------------|------------|----------
 | serverToken| credentials| This request requires server level privileges. This token can be found on the Credentials tab under your Postmark server.
 | messageId  | String     | Id of the message.
-| count      | String     | Number of message opens to return per request. Max 500.
-| offset     | String     | Number of messages to skip
+| count      | Number     | Number of message opens to return per request. Max 500.
+| offset     | Number     | Number of messages to skip
 
 ## Postmark.getListDomains
 Gets a list of domains containing an overview of the domain and authentication status.
@@ -459,8 +464,8 @@ Gets a list of domains containing an overview of the domain and authentication s
 | Field       | Type       | Description
 |-------------|------------|----------
 | accountToken| credentials| This request requires account level privileges. Only accessible by the account owner, this token can be found on the Account tab of your Postmark account.
-| count       | String     | Number of records to return per request. Max 500.
-| offset      | String     | Number of records to skip.
+| count       | Number     | Number of records to return per request. Max 500.
+| offset      | Number     | Number of records to skip.
 
 ## Postmark.getDomainDetails
 Gets all the details for a specific domain.
@@ -530,7 +535,7 @@ Gets all the details for a specific sender signature.
 | signatureId | String     | Id of the signature.
 
 ## Postmark.createSignature
-Gets all the details for a specific sender signature.
+Create a signature.
 
 | Field           | Type       | Description
 |-----------------|------------|----------
