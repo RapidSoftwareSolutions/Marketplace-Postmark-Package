@@ -39,7 +39,17 @@ This endpoint is solely responsible for sending emails with Postmark through a s
 | headers                 | Array      | List of custom headers to include.
 | trackOpens              | Select     | Activate open tracking for this email.
 | trackLinks              | Select     | Activate link tracking for links in the HTML or Text bodies of this email. 
-| attachments             | Array      | List of attachments
+| attachments             | Array      | List of attachments.
+
+##### Attachments example
+
+```
+{
+      "Name": "readme.txt",
+      "Content": "dGVzdCBjb250ZW50",
+      "ContentType": "text/plain"
+}
+```
 
 ## Postmark.sendEmails
 This endpoint is solely responsible for sending emails with Postmark through a specific server.
@@ -62,6 +72,16 @@ This endpoint is solely responsible for sending emails with Postmark through a s
 | emails.trackOpens              | Select     | Activate open tracking for this email.
 | emails.trackLinks              | Select     | Activate link tracking for links in the HTML or Text bodies of this email. 
 | emails.attachments             | JSON       | List of attachments
+
+##### Attachments example
+
+```
+{
+      "Name": "readme.txt",
+      "Content": "dGVzdCBjb250ZW50",
+      "ContentType": "text/plain"
+}
+```
 
 ## Postmark.getDeliveryStats
 Get delivery stats.Lets you access all reports regarding your bounces for a specific server.

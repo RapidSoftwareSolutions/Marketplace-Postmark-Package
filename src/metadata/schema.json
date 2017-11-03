@@ -224,8 +224,8 @@
                         },
                         {
                             "name": "Content",
-                            "type": "File",
-                            "info": "File url.",
+                            "type": "String",
+                            "info": "Binary content.",
                             "required": true
                         },
                         {

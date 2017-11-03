@@ -4,7 +4,7 @@ $app->post('/api/Postmark/sendEmails', function ($request, $response) {
 
     $settings = $this->settings;
     $checkRequest = $this->validation;
-    $validateRes = $checkRequest->validate($request, ['serverToken','emails','to']);
+    $validateRes = $checkRequest->validate($request, ['serverToken','emails']);
 
     if(!empty($validateRes) && isset($validateRes['callback']) && $validateRes['callback']=='error') {
         return $response->withHeader('Content-type', 'application/json')->withStatus(200)->withJson($validateRes);
@@ -12,24 +12,37 @@ $app->post('/api/Postmark/sendEmails', function ($request, $response) {
         $post_data = $validateRes;
     }
 
-    $requiredParams = ['serverToken'=>'serverToken','emails'=>'emails','to'=>'To'];
-    $optionalParams = ['CcRecipientEmailAddress'=>'Cc','BccRecipientEmailAddress'=>'Bcc','subject'=>'Subject','tag'=>'Tag','htmlBody'=>'HtmlBody','textBody'=>'TextBody','textBody'=>'TextBody','replyTo'=>'ReplyTo','headers'=>'headers','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','attachments'=>'Attachments'];
+    $requiredParams = ['serverToken'=>'serverToken','emails'=>'emails'];
+    $optionalParams = ['to'=>'To','from' => 'from','CcRecipientEmailAddress'=>'Cc','BccRecipientEmailAddress'=>'Bcc','subject'=>'Subject','tag'=>'Tag','htmlBody'=>'HtmlBody','textBody'=>'TextBody','textBody'=>'TextBody','replyTo'=>'ReplyTo','headers'=>'headers','trackOpens'=>'TrackOpens','trackLinks'=>'TrackLinks','attachments'=>'Attachments'];
     $bodyParams = [
        'json' => ['emails']
     ];
 
+
+
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
 
-    
+    foreach($data['emails'] as $key => $value)
+    {
+        foreach($optionalParams as $alias => $vendor)
+        {
+            if(!empty($value[$alias]))
+            {
+                $newArr[$key][$vendor] = $data['emails'][$key][$alias];
+            }
+        }
+    }
+
 
     $client = $this->httpClient;
-    $query_str = "https://api.postmarkapp.com/email";
+    $query_str = "https://api.postmarkapp.com/email/batch";
 
     
 
     $requestParams = \Models\Params::createRequestBody($data, $bodyParams);
     $requestParams['headers'] = ["X-Postmark-Server-Token"=>"{$data['serverToken']}", "Accept"=>"application/json"];
-     
+    $requestParams['json'] = $newArr;
+
 
     try {
         $resp = $client->post($query_str, $requestParams);

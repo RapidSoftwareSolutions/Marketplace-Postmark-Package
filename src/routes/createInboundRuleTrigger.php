@@ -15,7 +15,7 @@ $app->post('/api/Postmark/createInboundRuleTrigger', function ($request, $respon
     $requiredParams = ['serverToken'=>'serverToken','rule'=>'Rule'];
     $optionalParams = [];
     $bodyParams = [
-       'json' => ['rule']
+       'json' => ['Rule']
     ];
 
     $data = \Models\Params::createParams($requiredParams, $optionalParams, $post_data['args']);
