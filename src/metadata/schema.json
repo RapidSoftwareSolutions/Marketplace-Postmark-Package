@@ -3218,8 +3218,8 @@
                 {
                     "name": "returnPathDomain",
                     "type": "String",
-                    "info": "A custom value for the Return-Path domain. It is an optional field, but it must be a subdomain of your From Email domain and must have a CNAME record that points to pm.mtasv.net. For more information about this field, please see readme.",
-                    "required": false,
+                    "info": "A custom value for the Return-Path domain.For more information about this field, please see readme.",
+                    "required": true,
                     "vendorSchema": {
                         "name": "ReturnPathDomain"
                     }

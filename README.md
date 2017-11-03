@@ -218,7 +218,6 @@ Send email with template.
 | to                      | String     | Recipient email address. Multiple addresses are comma separated. Max 50.
 | CcRecipientEmailAddress | String     | Cc recipient email address. Multiple addresses are comma separated. Max 50.
 | BccRecipientEmailAddress| String     | Bcc recipient email address. Multiple addresses are comma separated. Max 50.
-| subject                 | String     | Email subject.
 | tag                     | String     | Email tag that allows you to categorize outgoing emails and get detailed statistics.
 | replyTo                 | String     | Reply To override email address. Defaults to the Reply To set in the sender signature.
 | headers                 | Array      | List of custom headers to include.
@@ -756,7 +755,7 @@ Create an inbound rule trigger.
 | rule       | String     | Email address (or domain) that you would like to block from sending.
 
 ## Postmark.deleteSingleTrigger
-Delete a single trigger.
+Delete a single inbound trigger.
 
 | Field      | Type       | Description
 |------------|------------|----------
